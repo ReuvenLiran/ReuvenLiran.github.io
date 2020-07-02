@@ -1,0 +1,79 @@
+
+/* body{
+    font-family: Helvetica, Arial, sans-serif;
+  } */
+  /* .container{
+    width: 50%;
+    margin: 0 auto;
+  } */
+  @keyframes load{
+    from {
+      width: 0%
+    }
+  }
+  @-webkit-keyframes load{
+    from {
+      width: 0%
+    }
+  }
+  @-moz-keyframes load{
+    from {
+      width: 0%
+    }
+  }
+  @-o-keyframes load{
+    from {
+      width: 0%
+    }
+  }
+  
+  .bar{
+    background-color: #777777;
+    padding: 2px;
+    border-radius: 15px;
+    margin-bottom: 5px;
+    font-size: 1em;
+    color: #5b5b5b;
+    /* color: #FFF; */
+    /* color: rgba(102, 97, 91, 0.7); */
+    font-weight: bold;
+    /* text-shadow: 1px 1px 1px rgba(0,0,0,0.5); */
+  }
+  .bar::before{
+    content:  attr(data-skill);
+    background-color: #f3b0ff;
+    display: inline-block;
+    padding: 5px 0 5px 10px;
+    border-radius: inherit;
+    animation: load 1s 1.4s both;
+    -webkit-animation: load 1s 1.4s both;
+    -moz-animation: load 1s 1.4s both;
+    -o-animation: load 1s 1.4s both;
+  }
+  
+  .bar.front::before{
+    background-color: #a2a2a2;
+    /* background-color: #d6d3e8; */
+    /* background-color: #cbc4fd; */
+    /* background-color: #897bff; */
+  }
+  .bar.back::before{
+    background-color: #a6cfe3;
+  }
+  
+  .bar.learning::before{
+    width: calc(20% - 10px);
+  }
+  .bar.basic::before{
+    width: calc(40% - 10px);
+  }
+  .bar.intermediate::before{
+    width: calc(60% - 10px);
+  }
+  .bar.advanced::before{
+    width: calc(80%);
+  }
+  .bar.expert::before{
+    width: calc(100%);
+  }
+  
