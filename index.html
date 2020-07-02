@@ -109,28 +109,34 @@ The above copyright notice and this permission notice shall be included in all c
 
         if (offset.bottom - (offset.height * 0.5) <= (window.innerHeight || document.documentElement.clientHeight) && offset.bottom > 0) {
           if (!played) {
-              setTimeout(() => {
+            played = true;
+            player.playVideo();
+            setTimeout(() => {
+              if (!stopped) {
                 player.playVideo();
-                played = true;
-              }, 500);
+              }
+            }, 500);
           }
-
         } else if (
           ((offset.bottom < 0) ||
            (offset.top < (window.innerHeight || document.documentElement.clientHeight))) &&
           played &&
           !stopped
         ) {
+          stopped = true;
           setTimeout(() => {
-            stopped = true;
             player.pauseVideo();
-          }, 500);
+          }, 1000);
         }
       }
       
       window.addEventListener("scroll", onScroll); //debounce(onScroll, 300));
     </script>
     <style>
+
+      body {
+        color: #27221c;
+      }
 
       @font-face {
         font-family: 'comic-hebrew Bold';
@@ -623,6 +629,7 @@ The above copyright notice and this permission notice shall be included in all c
       .blockquote-wrapper
         .blockquote-inner
           #blockquote-3-he {
+            overflow: scroll;
             font-family: Mekorot;
             font-style: normal;
             width: 100%;
@@ -633,7 +640,8 @@ The above copyright notice and this permission notice shall be included in all c
             top: 0px;
             left: 0px;
             transform: rotateY(180deg);
-            border-right: 8px solid #78C0A8 ;
+            /* border-right: 8px solid #78C0A8 ; */
+            border-right: 8px solid #59b697 ;
             border-left: none;
             padding: 1.2em  75px 1.2em 30px;
             display: flex;
@@ -663,7 +671,8 @@ The above copyright notice and this permission notice shall be included in all c
         font-style:italic;
         color: #555555;
         padding:1.2em 30px 1.2em 75px;
-        border-left:8px solid #78C0A8 ;
+        /* border-left:8px solid #78C0A8; */
+        border-left: 8px solid #59b697;
         line-height:1.6;
         position: relative;
         background-color: #EDEDED;
@@ -672,7 +681,8 @@ The above copyright notice and this permission notice shall be included in all c
       blockquote::before{
         font-family:Arial;
         content: "\201C";
-        color:#78C0A8;
+        /* color:#78C0A8; */
+        color:#59b697;
         font-size:4em;
         position: absolute;
         left: 10px;
