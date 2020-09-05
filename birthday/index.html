@@ -1,0 +1,154 @@
+<html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.3.3/pixi.min.js"
+        integrity="sha512-J7UHpLx39bpqtP+aWP6yIuXroFk0XPkDQaS9zDthM4TVeaXstWYh556gxsXwwIwpAPSoKqVHW+eqz3B93SpyKg=="
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="cake.css">
+    <link rel="stylesheet" type="text/css" href="card.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="balloons.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Wendy+One' rel='stylesheet' type='text/css'>
+    <script type="text/javascript">
+        function onSongWasLoaded() {
+            setTimeout(() => {
+                document.querySelector('.loader').style.display = "none";
+                document.querySelector(".body").classList.add('show')
+            }, 2000)
+        }
+    </script>
+</head>
+
+
+<body>
+    <audio oncanplaythrough="onSongWasLoaded()" id="happyBirthdaySong" src="happy_birthday.mp3" type=”audio/mp3″
+        autoplay>
+    </audio>
+    <audio id="happyBirthdayHebrewSong" src="birthday_song.mp3" type=”audio/mp3″ autoplay>
+    </audio>
+    <div class="loader">
+        <h2>Loading...</h2>
+    </div>
+    <div class="body">
+        <div class="background"></div>
+        <div class="balloon">
+            <div><span class="letter">H</span></div>
+            <div><span class="letter">A</span></div>
+            <div><span class="letter">P</span></div>
+            <div><span class="letter">P</span></div>
+            <div><span class="letter">Y</span></div>
+
+            <div><span class="letter">B</span></div>
+            <div><span class="letter">I</span></div>
+            <div><span class="letter">R</span></div>
+            <div><span class="letter">T</span></div>
+            <div><span class="letter">H</span></div>
+            <div><span class="letter">D</span></div>
+            <div><span class="letter">A</span></div>
+            <div><span class="letter">Y</span></div>
+
+            <div><span class="letter">C</span></div>
+            <div><span class="letter">A</span></div>
+            <div><span class="letter">T</span></div>
+            <div><span class="letter">H</span></div>
+            <div><span class="letter">E</span></div>
+            <div><span class="letter">R</span></div>
+            <div><span class="letter">I</span></div>
+            <div><span class="letter">N</span></div>
+            <div><span class="letter">E</span></div>
+        </div>
+
+        <div id="merrywrap" class="merrywrap">
+            <div class="giftbox">
+                <div class="cover">
+                    <div></div>
+                </div>
+                <div class="box"></div>
+            </div>
+        </div>
+        <div class="whole-card">
+            <div class="card">
+                <div class="back">
+                    <div class="age">24</div>
+                    <button class="bring-the-cake">Bring Out The Cake!</button>
+                </div>
+                <div class="front">
+                    <div class="imgset">
+                        <img width="100%"
+                            src="https://1.bp.blogspot.com/-Mgj9-rbs65E/XfMoPSD5gtI/AAAAAAAAURk/NBokE2gSS2cTSJ2em5lZ5hJDuTtRN7UVwCLcBGAsYHQ/s1600/2713997.png">
+                    </div>
+                </div>
+                <div class="text-container">
+                    <p id="head">Happy Birthday!</p>
+                    <div class="song-row hebrew">
+                        <img src="./playlist.svg" class="lyrics-icon" />
+                        <span>היום יום הולדת</span>
+                    </div>
+                    <div class="song-row hebrew">
+                        <img src="./playlist.svg" class="lyrics-icon" />
+                        <span>היום יום הולדת</span>
+                    </div>
+                    <div class="song-row hebrew">
+                        <img src="./playlist.svg" class="lyrics-icon" />
+                        <span>היום יום הולדת</span>
+                    </div>
+                    <div class="song-row hebrew">
+                        <img src="./playlist.svg" class="lyrics-icon" />
+                        <span>לקאת׳רין!</span>
+                    </div>
+                    <div class="song-row hebrew">
+                        <img src="./playlist.svg" class="lyrics-icon" />
+                        <span>לה לה לה</span>
+                    </div>
+                    <br />
+                    <p class="hebrew">
+                        יום הולדת שמח! בריאות, שמחה ואושר
+                        <span class="emoji">&#128578;</span>
+                        <br />
+                        אל תתבאסי על הגיל, זה רק מספר, תמיד תוכלי להתנחם בזה שיש לך תלמידים זקנים
+                        <span class="emoji">&#128521;</span>
+                        <br />
+                        לגיל 24 יש לך הישגים מאוד יפים, את צריכה להתגאות בהם ובעצמך.
+                        הרבה אנשים מחליטים לוותר על החלומות שלהם ואת החלטת שלא לוותר.
+                        בגלל זה אני מאמין שאת תגיעי רחוק, תגשימי את המטרות והיעדים שהצבת ותציבי לעצמך.
+                    </p>
+
+                    <p class="hebrew">
+                        אז רק אאחל לך מזל טוב ועד 120, ותהני מיום ההולדת שלך.
+                        <br />
+                        <br />
+                        מעריך מכל הלב,
+                        <br />
+                        התלמיד הזקן
+                    </p>
+                    <br />
+                    <div class="hebrew info">* תלחצי על הכתפור משמאל בסיום :)</div>
+                    <!-- <p>I hope your special day will bring you lots of happiness, love, and fun. You deserve them a lot.
+                    Enjoy!</p>
+                <p>Hope your day goes great!</p> -->
+                </div>
+            </div>
+        </div>
+        <div class="cake">
+            <div class="plate"></div>
+            <div class="layer layer-bottom"></div>
+            <div class="layer layer-middle"></div>
+            <div class="layer layer-top"></div>
+            <div class="icing"></div>
+            <div class="drip drip1"></div>
+            <div class="drip drip2"></div>
+            <div class="drip drip3"></div>
+            <div class="candle">
+                <div class="flame"></div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./index.js"></script>
+
+</html>
