@@ -498,6 +498,9 @@ canvas {
 
 .body {
   display: none;
+  height: 100vh;
+  overflow: hidden;
+  width: 100vw;
 }
 
 .body.show {
