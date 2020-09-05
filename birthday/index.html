@@ -17,14 +17,21 @@
         }
 
         var r=document.createElement("script");
+        r.onload = onLoadScript;
         r.src=src;
         var c=document.getElementsByTagName("script")[0];c.parentNode.insertBefore(r,c)
+
+        function onLoadScript () {
+            var r=document.createElement("script");
+            r.src='./index.js';
+            var c=document.getElementsByTagName("script")[0];c.parentNode.insertBefore(r,c)
+        }
 
         function onSongWasLoaded() {
             setTimeout(() => {
                 document.querySelector('.loader').style.display = "none";
                 document.querySelector(".body").classList.add('show')
-            }, 3000)
+            }, 5000);
         }
     </script>
 
@@ -173,6 +180,6 @@
         </div>
     </div>
 </body>
-<script src="./index.js"></script>
+<!-- <script src="./index.js"></script> -->
 
 </html>
