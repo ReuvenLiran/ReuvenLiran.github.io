@@ -1,3 +1,24 @@
+const BROWSER = {
+  SAFARI: false,
+  CHROME: false,
+  FIREFOX: false,
+};
+
+function checkIsSafari() {
+  var ua = navigator.userAgent.toLowerCase();
+  if (ua.indexOf("safari") != -1) {
+    if (ua.indexOf("chrome") === -1) {
+      BROWSER.SAFARI = true;
+    } else {
+      BROWSER.CHROME = true;
+    }
+  } else {
+    BROWSER.SAFARI = true;
+  }
+}
+
+checkIsSafari();
+
 let GLOBAL_RATIO = 1;
 const MENORAH_PADDING_LEFT = 100;
 const MENORAH_PADDING_TOP = 10;
@@ -142,9 +163,15 @@ function resizeCanvas() {
   setMenorahSize();
   setGeorgeSize();
   mainCandleParticles = createParticles(mouse.x, mouse.m);
-  CANDLES.forEach((candle, i) => {
+  CANDLES.forEach((candle) => {
     candle.offsetY = (candle.offsetY / 700) * imageHeight;
     candle.offsetX = (candle.offsetX / 750) * imageWidth;
+    // candle.offsetX = candle.offsetX * GLOBAL_RATIO
+    // const { x: rX, y: rY } = getResponsiveXY(candle.offsetX, candle.offsetY);
+    // console.log("QQQQ", candle.particles.length)
+    // if (candle.particles.length > 0) {
+      // candle.particles = createParticles(rX, rY);
+    // }
   });
 }
 
@@ -339,8 +366,9 @@ function getResponsiveXY(offsetX, offsetY) {
 
 //Lets create some particles now
 function createParticles(x, y) {
-  let particle_count = 100 * GLOBAL_RATIO * 0.85;
-  particle_count = particle_count < 70 ? 70 : particle_count;
+  let particle_count = 50; //70 * GLOBAL_RATIO * 0.5;
+  console.log(particle_count);
+  particle_count = 30; // particle_count < 50 ? 50 : particle_count;
   const particles = [];
   for (var i = 0; i < particle_count; i++) {
     particles.push(new particle(x, y));
@@ -350,9 +378,22 @@ function createParticles(x, y) {
 
 function particle(x = 0, y = 0) {
   this.speed = {
-    x: ((-2.5 + Math.random() * 5) / 4) * GLOBAL_RATIO * 1.1,
-    y: ((-18 + Math.random() * 10) / 3) * GLOBAL_RATIO * 1.1 - 3,
+    x:
+      ((-2.5 + Math.random() * 5) / 4) *
+      (GLOBAL_RATIO < 1 ? 1 : GLOBAL_RATIO) *
+      1.1,
+    y:
+      ((-18 + Math.random() * 10) / 3) *
+        (GLOBAL_RATIO < 1 ? 1 : GLOBAL_RATIO) *
+        1.1 -
+      3,
   };
+  if (GLOBAL_RATIO < 0.6) {
+    this.speed.x *= GLOBAL_RATIO; //0.8;
+    this.speed.y *= GLOBAL_RATIO; //0.8;
+    // alert(GLOBAL_RATIO)
+  }
+
   //location = mouse coordinates
   //Now the flame follows the mouse coordinates
   this.location = { x, y };
@@ -361,6 +402,9 @@ function particle(x = 0, y = 0) {
   this.radius = GLOBAL_RATIO * 0.85 * 10; // 10 + Math.random() * 20;
   //life range = 20-30
   this.life = 20 + Math.random() * 10 - 15;
+  if (GLOBAL_RATIO < 1) {
+    this.life -= 5;
+  }
   this.remaining_life = this.life;
   //colors
   this.r = Math.round(Math.random() * 255);
@@ -437,52 +481,61 @@ function playFireSound() {
   }
 }
 
-function onClick (e) {
-    const CLICK_AREA_SIZE = 30 * GLOBAL_RATIO;
-  
-    const bounds = e.target.getBoundingClientRect();
-    const x = e.pageX - bounds.left - scrollX; // is window.scrollX same for Y
-    const y = e.pageY - bounds.top - scrollY; //
-    CANDLES.forEach(function (candle, index) {
-      const { x: rX, y: rY } = getResponsiveXY(candle.offsetX, candle.offsetY);
-      const instruction = INSTRUCTIONS[instructionIndex];
-  
-      const candleIndex =
-        instruction && instruction.data ? instruction.data.candleIndex : -1;
-      if (
-        candleIndex >= 0 &&
-        rX + CLICK_AREA_SIZE > x &&
-        rX - CLICK_AREA_SIZE < x &&
-        rY + CLICK_AREA_SIZE > y &&
-        rY - CLICK_AREA_SIZE < y
-      ) {
-        if (index === candleIndex) {
-          isMatchStriking = true;
-          fireSound.pause();
+function onClick(e) {
+  const CLICK_AREA_SIZE = 30 * GLOBAL_RATIO;
+
+  const bounds = e.target.getBoundingClientRect();
+  const x = e.pageX - bounds.left - scrollX; // is window.scrollX same for Y
+  const y = e.pageY - bounds.top - scrollY; //
+  CANDLES.forEach(function (candle, index) {
+    const { x: rX, y: rY } = getResponsiveXY(candle.offsetX, candle.offsetY);
+    const instruction = INSTRUCTIONS[instructionIndex];
+
+    const candleIndex =
+      instruction && instruction.data ? instruction.data.candleIndex : -1;
+    if (
+      candleIndex >= 0 &&
+      rX + CLICK_AREA_SIZE > x &&
+      rX - CLICK_AREA_SIZE < x &&
+      rY + CLICK_AREA_SIZE > y &&
+      rY - CLICK_AREA_SIZE < y
+    ) {
+      if (index === candleIndex) {
+        matchStrike.pause();
+        matchStrike.play();
+        isMatchStriking = true;
+        // fireSound.pause();
+        matchStrike.currentTime = 0;
+        clearTimeout(matchStrikeSoundTimeout);
+
+        function onEndMatchStrike() {
           matchStrike.pause();
-          matchStrike.currentTime = 0;
-          matchStrike.play();
-          clearTimeout(matchStrikeSoundTimeout);
-  
-          function onEndMatchStrike() {
-            matchStrike.pause();
-            isMatchStriking = false;
-            playFireSound();
-          }
-  
-          matchStrikeSoundTimeout = setTimeout(onEndMatchStrike, 3500);
+          isMatchStriking = false;
+        }
+
+        matchStrikeSoundTimeout = setTimeout(onEndMatchStrike, 3500);
+        const time = BROWSER.SAFARI ? 500 : 0;
+
+        setTimeout(() => {
           candle.particles = createParticles(rX, rY);
           showInstruction();
-        } else {
-          1;
+        }, time);
+      } else {
+        if (BROWSER.SAFARI) {
           showInstruction(true);
           setTimeout(() => {
             playWrongSound();
-          }, 500);
+          }, 0);
+        } else {
+          showInstruction(true);
+          setTimeout(() => {
+            playWrongSound();
+          }, 100);
         }
       }
-    });
-  }
+    }
+  });
+}
 
 document.addEventListener("click", debounce(onClick, 300));
 
@@ -569,6 +622,7 @@ draw();
 showInstruction();
 setInterval(draw, 33);
 setInterval(playFireSound, 8000);
+playFireSound();
 
 let parrotHelloFrameIndex = -1;
 let reverse = false;
@@ -601,10 +655,10 @@ function animateHello() {
 }
 
 function debounce(func, wait) {
-    let timeout
-    return function() {
-        const context = this
-        clearTimeout(timeout)
-        timeout = setTimeout(() => func.apply(context, arguments), wait)
-    }
-  }
+  let timeout;
+  return function () {
+    const context = this;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(context, arguments), wait);
+  };
+}
